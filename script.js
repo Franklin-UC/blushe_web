@@ -6,7 +6,12 @@ const CONFIG = {
   email: "",            // correo del negocio
   mailchimpAction: "",  // valor de action="..." del formulario incrustado de Mailchimp
   mailchimpLink: "",    // (opcional) enlace al formulario alojado de Mailchimp
-  powtoon: "",          // src de inserción del video de Powtoon
+  // Sus 2 videos. En "url" pueden poner: enlace de YouTube, enlace de Google Drive,
+  // enlace de inserción de Powtoon, o la ruta de un archivo .mp4 (ej: "videos/video1.mp4")
+  videos: [
+    { titulo: "Video promocional 1", url: "" },
+    { titulo: "Video promocional 2", url: "" }
+  ],
   cuponVigencia: "31/12/2026"
 };
 /* ===================================================== */
@@ -17,8 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const wa = C.whatsapp ? 'https://wa.me/' + C.whatsapp.replace(/\D/g, '') : '';
   const links = { facebook: C.facebook, instagram: C.instagram, whatsapp: wa, email: C.email ? 'mailto:' + C.email : '' };
   $$('[data-link]').forEach(a => links[a.dataset.link] ? a.href = links[a.dataset.link] : a.classList.add('hide'));
-  // video
-  if (C.powtoon) $('#videoBox').innerHTML = '<iframe src="' + C.powtoon + '" title="Video de Blushé Cosmetics" allowfullscreen></iframe>';
+  // videos
+  const embed = u => {
+    let m;
+    if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(u)) return '<video controls playsinline preload="metadata" src="' + u + '"></video>';
+    if ((m = u.match(/(?:youtu\.be\/|v=|shorts\/)([\w-]{11})/))) u = 'https://www.youtube.com/embed/' + m[1];
+    else if ((m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/))) u = 'https://drive.google.com/file/d/' + m[1] + '/preview';
+    return '<iframe src="' + u + '" title="Video de Blushé Cosmetics" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+  };
+  $('#videoGrid').innerHTML = C.videos.map(v => '<figure class="rv"><div class="video">' +
+    (v.url ? embed(v.url) : '<div class="vph">&#127916;<p>Próximamente</p></div>') +
+    '</div><figcaption>' + v.titulo + '</figcaption></figure>').join('');
   // mailchimp
   const f = $('#subForm');
   if (C.mailchimpAction) f.action = C.mailchimpAction;
