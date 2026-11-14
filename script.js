@@ -1,11 +1,11 @@
 /* ===== CONFIGURACIÓN: completen solo este bloque ===== */
 const CONFIG = {
-  facebook: "",         // https://www.facebook.com/su-fanpage
-  instagram: "",        // https://www.instagram.com/su-cuenta
+  facebook: "https://www.facebook.com/share/1A1jZQG1rf/",
+  instagram: "https://www.instagram.com/blusiepe",
   whatsapp: "",         // solo números con código de país. Ej: 51999999999
   email: "",            // correo del negocio
   mailchimpAction: "",  // valor de action="..." del formulario incrustado de Mailchimp
-  mailchimpLink: "",    // (opcional) enlace al formulario alojado de Mailchimp
+  mailchimpLink: "https://eepurl.com/B1W53qj9Dt",    // enlace al formulario de suscripción de Mailchimp
   // Sus 2 videos. En "url" pueden poner: enlace de YouTube, enlace de Google Drive,
   // enlace de inserción de Powtoon, o la ruta de un archivo .mp4 (ej: "videos/video1.mp4")
   videos: [
